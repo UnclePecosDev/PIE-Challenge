@@ -1,0 +1,980 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PIE - Magic Examination</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: radial-gradient(circle, #59427c, #171020);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    font-family: Georgia, serif;
+    padding: 35px 12px;
+}
+
+.container {
+    text-align: center;
+    width: 100%;
+    max-width: 680px;
+}
+
+h1 {
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 27px;
+}
+
+/* EXAM PAPER */
+
+.paper {
+    background: #fff5e6;
+    padding: 35px 25px;
+    border: 3px solid #c5a67b;
+    box-shadow: 0 15px 40px #0008;
+    transform: rotate(-1deg);
+    transition: box-shadow 0.5s;
+    position: relative;
+    overflow: hidden;
+    text-align: left;
+}
+
+.paper.solved {
+    box-shadow: 0 0 50px gold;
+}
+
+.exam-title {
+    font-size: 36px;
+    text-align: center;
+    border-bottom: 2px solid #292129;
+    padding-bottom: 15px;
+}
+
+.exam-subtitle {
+    text-align: center;
+    font-size: 17px;
+    font-style: italic;
+    margin: 15px 0;
+    color: #604c55;
+}
+
+.instructions {
+    background: #f4e6cc;
+    border-left: 4px solid #8566ad;
+    padding: 13px;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* QUESTION */
+
+.question-block {
+    padding: 22px 0;
+    border-bottom: 1px dashed #a99789;
+}
+
+.question {
+    font-size: 22px;
+    font-weight: bold;
+    color: #211820;
+    margin-bottom: 10px;
+}
+
+.hint {
+    font-size: 16px;
+    font-style: italic;
+    line-height: 1.5;
+    color: #66525a;
+    margin-bottom: 15px;
+}
+
+.hint strong {
+    color: #7950a7;
+}
+
+/* SCATTERED ALPHABET */
+
+.chaos-zone {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px 8px;
+    min-height: 90px;
+    padding: 20px 12px;
+    background: #eadcc733;
+    border: 1px dashed #b9aa98;
+    border-radius: 4px;
+}
+
+.letter {
+    width: 30px;
+    height: 40px;
+    padding: 0;
+    border: none;
+    margin: 0;
+
+    background: transparent;
+    color: #231b24;
+
+    font-family: Georgia, serif;
+    font-weight: bold;
+    font-size: 26px;
+
+    cursor: pointer;
+    position: relative;
+
+    text-shadow: 1px 2px 1px #0002;
+
+    animation: chaos 0.6s infinite alternate ease-in-out;
+    animation-delay: var(--delay);
+}
+
+@keyframes chaos {
+    from {
+        transform:
+            translate(var(--x), var(--y))
+            rotate(var(--rotation));
+    }
+
+    to {
+        transform:
+            translate(
+                calc(var(--x) + 3px),
+                calc(var(--y) - 3px)
+            )
+            rotate(calc(var(--rotation) + 7deg));
+    }
+}
+
+.letter:hover:not(:disabled) {
+    color: #b02e28;
+    animation-play-state: paused;
+    scale: 1.25;
+    text-shadow: 0 0 8px #ffae42;
+}
+
+.letter.used {
+    opacity: 0.12;
+}
+
+.letter:disabled {
+    cursor: default;
+}
+
+/* ANSWER */
+
+.answer-label {
+    margin: 14px 0 8px;
+    font-size: 14px;
+    color: #51404b;
+}
+
+.answer-line {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 4px;
+    min-height: 46px;
+    padding: 5px 0;
+}
+
+.answer-slot {
+    width: 28px;
+    height: 39px;
+    padding: 0;
+    margin: 0;
+
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #392c36;
+
+    font-family: Georgia, serif;
+    font-size: 22px;
+    font-weight: bold;
+    color: #251b25;
+
+    cursor: pointer;
+}
+
+.answer-slot.filled {
+    animation: letterAppear 0.25s ease-out;
+}
+
+.answer-slot:disabled {
+    cursor: default;
+}
+
+@keyframes letterAppear {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* QUESTION FEEDBACK */
+
+.question-feedback {
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 12px;
+    min-height: 18px;
+    font-family: Arial, sans-serif;
+}
+
+.question-block.good .question-feedback {
+    color: #168447;
+}
+
+.question-block.bad .question-feedback {
+    color: #c32a2a;
+}
+
+.question-block.good {
+    background: #e0ffd529;
+}
+
+/* SCORE */
+
+.result {
+    text-align: center;
+    padding: 18px 5px;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: #513b64;
+    min-height: 60px;
+}
+
+.result.success {
+    color: #168447;
+    font-size: 21px;
+}
+
+/* BUTTONS */
+
+.actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.action {
+    border: none;
+    border-radius: 9px;
+    padding: 13px 19px;
+    background: #7752c7;
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.action:hover:not(:disabled) {
+    background: #9472de;
+}
+
+.action:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.reset {
+    background: #6b5960;
+}
+
+.reset:hover {
+    background: #8b737c !important;
+}
+
+.small-action {
+    display: block;
+    margin: 10px auto 0;
+    border: none;
+    background: transparent;
+    color: #7950a7;
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.small-action:hover {
+    color: #ac4a65;
+}
+
+#status {
+    font-family: Arial, sans-serif;
+    color: #ffdd83;
+    margin-top: 20px;
+}
+
+@media (max-width: 480px) {
+    .paper {
+        padding: 25px 13px;
+    }
+
+    .exam-title {
+        font-size: 29px;
+    }
+
+    .question {
+        font-size: 20px;
+    }
+
+    .letter {
+        font-size: 22px;
+        width: 24px;
+    }
+
+    .answer-slot {
+        width: 22px;
+        font-size: 18px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>👊 PIE MAGIC EXAM</h1>
+
+    <div class="paper" id="paper">
+
+        <div class="exam-title">
+            Examination
+        </div>
+
+        <div class="exam-subtitle">
+            Module PIE — Trouver une idée de projet
+        </div>
+
+        <div class="instructions">
+            <strong>Consigne :</strong>
+            Lis chaque indice, puis clique sur les lettres
+            mélangées pour former le mot correct.
+            Termine toutes les questions avant de
+            corriger ton examen.
+        </div>
+
+        <!-- ALL EXAM QUESTIONS -->
+        <div id="examQuestions"></div>
+
+        <!-- RESULT -->
+        <div class="result" id="result"
+             role="status" aria-live="polite">
+        </div>
+
+        <div class="actions">
+
+            <button class="action"
+                    id="checkButton">
+                📝 CORRIGER L'EXAMEN
+            </button>
+
+            <button class="action reset"
+                    id="resetButton">
+                ↻ RESET
+            </button>
+
+        </div>
+
+    </div>
+
+    <p id="status">
+        Les lettres sont mélangées.
+        À toi de trouver les bonnes réponses !
+    </p>
+
+</div>
+
+<script>
+
+// ==========================================
+// PIE EXAM - QUESTIONS
+// ==========================================
+
+const questions = [
+
+    {
+        answer: "OBSERVATION",
+        hint: "Regarder attentivement son environnement pour découvrir des situations intéressantes."
+    },
+
+    {
+        answer: "BESOIN",
+        hint: "Ce qui manque aux personnes ou ce qu'elles souhaitent satisfaire."
+    },
+
+    {
+        answer: "PROBLEME",
+        hint: "Une difficulté rencontrée par des personnes qu'un projet pourrait résoudre."
+    },
+
+    {
+        answer: "CREATIVITE",
+        hint: "La capacité à imaginer des idées nouvelles et originales."
+    },
+
+    {
+        answer: "BRAINSTORMING",
+        hint: "Une méthode de groupe pour produire beaucoup d'idées sans les critiquer immédiatement."
+    },
+
+    {
+        answer: "SOLUTION",
+        hint: "Une réponse concrète que l'on propose pour résoudre une difficulté."
+    },
+
+    {
+        answer: "OPPORTUNITE",
+        hint: "Une possibilité intéressante de créer un projet grâce à un besoin non satisfait."
+    },
+
+    {
+        answer: "VALIDATION",
+        hint: "Vérifier auprès des futurs clients qu'une idée répond à une demande réelle."
+    }
+
+];
+
+// ==========================================
+// GAME STATE
+// ==========================================
+
+let exam = [];
+let examReviewed = false;
+let examCompleted = false;
+
+const paper = document.getElementById("paper");
+const questionsContainer =
+    document.getElementById("examQuestions");
+
+const result = document.getElementById("result");
+const checkButton =
+    document.getElementById("checkButton");
+
+const resetButton =
+    document.getElementById("resetButton");
+
+const statusText =
+    document.getElementById("status");
+
+// ==========================================
+// SHUFFLE
+// ==========================================
+
+function shuffle(array) {
+
+    const copy = [...array];
+
+    for (let i = copy.length - 1; i > 0; i--) {
+
+        const randomIndex =
+            Math.floor(Math.random() * (i + 1));
+
+        [copy[i], copy[randomIndex]] =
+            [copy[randomIndex], copy[i]];
+    }
+
+    return copy;
+}
+
+// ==========================================
+// MAKE MIXED LETTERS
+// ==========================================
+
+function createLetters(answer) {
+
+    const characters = [...answer];
+
+    let tiles = characters.map((char, index) => ({
+        id: index,
+        char: char,
+        x: Math.floor(Math.random() * 17 - 8),
+        y: Math.floor(Math.random() * 19 - 9),
+        rotation: Math.floor(Math.random() * 75 - 37),
+        delay: Math.random()
+    }));
+
+    tiles = shuffle(tiles);
+
+    // Ensure the letters are not already sorted
+    if (tiles.map(t => t.char).join("") === answer) {
+
+        const firstDifferent = tiles.findIndex(
+            t => t.char !== tiles[0].char
+        );
+
+        if (firstDifferent !== -1) {
+            [tiles[0], tiles[firstDifferent]] =
+                [tiles[firstDifferent], tiles[0]];
+        }
+    }
+
+    return tiles;
+}
+
+// ==========================================
+// START EXAM
+// ==========================================
+
+function startExam() {
+
+    exam = questions.map(question => ({
+
+        answer: question.answer,
+
+        hint: question.hint,
+
+        tiles: createLetters(question.answer),
+
+        selected: [],
+
+        status: "editing"
+
+    }));
+
+    examReviewed = false;
+    examCompleted = false;
+
+    result.textContent = "";
+    result.className = "result";
+
+    paper.classList.remove("solved");
+
+    statusText.textContent =
+        "Lis les indices et reconstitue les mots.";
+
+    renderExam();
+}
+
+// ==========================================
+// RENDER ALL QUESTIONS
+// ==========================================
+
+function renderExam() {
+
+    questionsContainer.innerHTML = "";
+
+    exam.forEach((question, questionIndex) => {
+
+        const block = document.createElement("section");
+
+        block.className = "question-block";
+
+        if (question.status === "correct") {
+            block.classList.add("good");
+        }
+
+        if (question.status === "wrong") {
+            block.classList.add("bad");
+        }
+
+        // QUESTION NUMBER
+
+        const title = document.createElement("div");
+
+        title.className = "question";
+
+        title.textContent =
+            "Question " + (questionIndex + 1) + " :";
+
+        block.appendChild(title);
+
+        // HINT
+
+        const hint = document.createElement("div");
+
+        hint.className = "hint";
+
+        const hintTitle = document.createElement("strong");
+        hintTitle.textContent = "💡 Indice : ";
+
+        const hintContent = document.createElement("span");
+        hintContent.textContent = question.hint;
+
+        hint.appendChild(hintTitle);
+        hint.appendChild(hintContent);
+
+        block.appendChild(hint);
+
+        // CHAOS ZONE
+
+        const chaosZone = document.createElement("div");
+
+        chaosZone.className = "chaos-zone";
+
+        question.tiles.forEach(tile => {
+
+            const letterButton =
+                document.createElement("button");
+
+            letterButton.className = "letter";
+
+            letterButton.textContent = tile.char;
+
+            letterButton.style.setProperty(
+                "--x", tile.x + "px"
+            );
+
+            letterButton.style.setProperty(
+                "--y", tile.y + "px"
+            );
+
+            letterButton.style.setProperty(
+                "--rotation",
+                tile.rotation + "deg"
+            );
+
+            letterButton.style.setProperty(
+                "--delay",
+                "-" + tile.delay + "s"
+            );
+
+            const used =
+                question.selected.includes(tile.id);
+
+            if (used) {
+                letterButton.classList.add("used");
+            }
+
+            letterButton.disabled =
+                used || question.status !== "editing";
+
+            letterButton.addEventListener("click", () => {
+                selectLetter(questionIndex, tile.id);
+            });
+
+            chaosZone.appendChild(letterButton);
+        });
+
+        block.appendChild(chaosZone);
+
+        // ANSWER LABEL
+
+        const answerLabel = document.createElement("div");
+
+        answerLabel.className = "answer-label";
+        answerLabel.textContent = "✍️ Réponse :";
+
+        block.appendChild(answerLabel);
+
+        // ANSWER LINE
+
+        const answerLine = document.createElement("div");
+
+        answerLine.className = "answer-line";
+
+        [...question.answer].forEach((char, slotIndex) => {
+
+            const slot = document.createElement("button");
+
+            slot.className = "answer-slot";
+
+            const selectedId =
+                question.selected[slotIndex];
+
+            if (selectedId !== undefined) {
+
+                const selectedTile = question.tiles.find(
+                    tile => tile.id === selectedId
+                );
+
+                slot.textContent = selectedTile.char;
+
+                slot.classList.add("filled");
+
+                slot.title = "Cliquer pour retirer";
+
+                slot.disabled =
+                    question.status !== "editing";
+
+                slot.addEventListener("click", () => {
+                    removeLetter(questionIndex, slotIndex);
+                });
+
+            } else {
+
+                slot.textContent = "";
+                slot.disabled = true;
+            }
+
+            answerLine.appendChild(slot);
+        });
+
+        block.appendChild(answerLine);
+
+        // UNDO BUTTON
+
+        if (
+            question.status === "editing" &&
+            question.selected.length > 0
+        ) {
+
+            const undo = document.createElement("button");
+
+            undo.className = "small-action";
+            undo.textContent = "⌫ Effacer la dernière lettre";
+
+            undo.addEventListener("click", () => {
+                question.selected.pop();
+                renderExam();
+            });
+
+            block.appendChild(undo);
+        }
+
+        // FEEDBACK
+
+        const feedback = document.createElement("div");
+
+        feedback.className = "question-feedback";
+
+        if (question.status === "correct") {
+            feedback.textContent = "✅ Bonne réponse !";
+        }
+
+        if (question.status === "wrong") {
+            feedback.textContent =
+                "❌ Mauvais ordre — à refaire !";
+        }
+
+        block.appendChild(feedback);
+
+        questionsContainer.appendChild(block);
+    });
+
+    updateControls();
+}
+
+// ==========================================
+// SELECT LETTER
+// ==========================================
+
+function selectLetter(questionIndex, tileId) {
+
+    const question = exam[questionIndex];
+
+    if (question.status !== "editing") return;
+
+    if (question.selected.includes(tileId)) return;
+
+    if (question.selected.length >= question.answer.length) {
+        return;
+    }
+
+    question.selected.push(tileId);
+
+    renderExam();
+}
+
+// ==========================================
+// REMOVE LETTER
+// ==========================================
+
+function removeLetter(questionIndex, slotIndex) {
+
+    const question = exam[questionIndex];
+
+    if (question.status !== "editing") return;
+
+    question.selected.splice(slotIndex, 1);
+
+    renderExam();
+}
+
+// ==========================================
+// UPDATE MAIN BUTTON
+// ==========================================
+
+function updateControls() {
+
+    if (examCompleted) {
+
+        checkButton.textContent = "🏆 REJOUER";
+        checkButton.disabled = false;
+        return;
+    }
+
+    if (examReviewed) {
+
+        checkButton.textContent =
+            "↻ RÉESSAYER LES ERREURS";
+
+        checkButton.disabled = false;
+        return;
+    }
+
+    checkButton.textContent =
+        "📝 CORRIGER L'EXAMEN";
+
+    const allFilled = exam.every(question => {
+
+        return (
+            question.status === "correct" ||
+            question.selected.length === question.answer.length
+        );
+
+    });
+
+    checkButton.disabled = !allFilled;
+}
+
+// ==========================================
+// CHECK THE WHOLE EXAM
+// ==========================================
+
+function checkExam() {
+
+    if (examReviewed || examCompleted) return;
+
+    const allFilled = exam.every(question =>
+        question.status === "correct" ||
+        question.selected.length === question.answer.length
+    );
+
+    if (!allFilled) return;
+
+    exam.forEach(question => {
+
+        if (question.status === "correct") return;
+
+        const userAnswer = question.selected.map(id => {
+
+            const tile = question.tiles.find(
+                letter => letter.id === id
+            );
+
+            return tile.char;
+
+        }).join("");
+
+        if (userAnswer === question.answer) {
+
+            question.status = "correct";
+
+        } else {
+
+            question.status = "wrong";
+        }
+    });
+
+    examReviewed = true;
+
+    const score = exam.filter(
+        q => q.status === "correct"
+    ).length;
+
+    if (score === exam.length) {
+
+        examCompleted = true;
+
+        paper.classList.add("solved");
+
+        result.textContent =
+            "🏆 FÉLICITATIONS ! " +
+            score + " / " + exam.length;
+
+        result.className = "result success";
+
+        statusText.textContent =
+            "Excellent ! Toutes les réponses sont correctes !";
+
+    } else {
+
+        result.textContent =
+            "📊 Résultat : " +
+            score + " / " + exam.length +
+            " — Corrige les erreurs !";
+
+        result.className = "result";
+
+        statusText.textContent =
+            "Les bonnes réponses restent validées.";
+    }
+
+    renderExam();
+}
+
+// ==========================================
+// RETRY ONLY WRONG ANSWERS
+// ==========================================
+
+function retryWrongAnswers() {
+
+    exam.forEach(question => {
+
+        if (question.status === "wrong") {
+
+            question.selected = [];
+
+            question.tiles =
+                createLetters(question.answer);
+
+            question.status = "editing";
+        }
+    });
+
+    examReviewed = false;
+
+    result.textContent =
+        "💡 Utilise les indices pour corriger tes erreurs.";
+
+    result.className = "result";
+
+    renderExam();
+}
+
+// ==========================================
+// BUTTON EVENTS
+// ==========================================
+
+checkButton.addEventListener("click", () => {
+
+    if (examCompleted) {
+
+        startExam();
+
+    } else if (examReviewed) {
+
+        retryWrongAnswers();
+
+    } else {
+
+        checkExam();
+    }
+
+});
+
+resetButton.addEventListener("click", startExam);
+
+// ==========================================
+// LAUNCH EXAM
+// ==========================================
+
+startExam();
+
+</script>
+
+</body>
+</html>

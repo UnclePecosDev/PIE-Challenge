@@ -1,0 +1,1558 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --bg: #100d24;
+    --surface: #1d1938;
+    --surface-light: #29234a;
+    --primary: #8b5cf6;
+    --primary-light: #a78bfa;
+    --yellow: #facc15;
+    --text: #ffffff;
+    --muted: #aaa5c5;
+    --success: #22c55e;
+    --danger: #ef4444;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background:
+            radial-gradient(circle at 15% 10%, #30205b 0, transparent 35%),
+            radial-gradient(circle at 85% 80%, #25164c 0, transparent 35%),
+            var(--bg);
+    color: var(--text);
+    font-family: 'Poppins', Arial, sans-serif;
+    padding-bottom: 100px;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+}
+
+/* HEADER */
+
+.topbar {
+    height: 75px;
+    padding: 0 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #ffffff12;
+    background: #100d24cc;
+    backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo {
+    color: white;
+    text-decoration: none;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.logo span {
+    color: var(--yellow);
+}
+
+.header-stats {
+    display: flex;
+    gap: 20px;
+    color: var(--yellow);
+    font-size: 14px;
+}
+
+/* GENERAL */
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 45px auto;
+}
+
+.view {
+    display: none;
+    animation: appear 0.4s ease;
+}
+
+.view.active {
+    display: block;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* HOME */
+
+.hero {
+    text-align: center;
+    padding: 65px 20px;
+}
+
+.hero-badge,
+.question-badge {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 30px;
+    background: #8b5cf622;
+    border: 1px solid #8b5cf655;
+    color: var(--primary-light);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.hero h1 {
+    font-size: clamp(30px, 5vw, 52px);
+    margin: 25px 0 15px;
+}
+
+.hero h1 span {
+    color: var(--yellow);
+}
+
+.hero p {
+    max-width: 600px;
+    margin: auto;
+    color: var(--muted);
+    line-height: 1.8;
+}
+
+.primary-btn {
+    background: linear-gradient(135deg, var(--primary), #6d28d9);
+    color: white;
+    padding: 14px 25px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    margin-top: 25px;
+    box-shadow: 0 8px 25px #8b5cf633;
+    transition: 0.25s;
+}
+
+.primary-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px #8b5cf655;
+}
+
+.primary-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.feature-card {
+    padding: 25px;
+    text-align: center;
+    background: var(--surface);
+    border: 1px solid #ffffff12;
+    border-radius: 18px;
+    transition: 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+}
+
+.feature-card span {
+    font-size: 35px;
+}
+
+.feature-card h3 {
+    margin: 12px 0 6px;
+}
+
+.feature-card p {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+/* SECTION HEADINGS */
+
+.section-heading {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.section-heading h1 {
+    font-size: 32px;
+}
+
+.section-heading p {
+    color: var(--muted);
+    margin-top: 8px;
+}
+
+/* LEVELS */
+
+.levels-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.level-card {
+    padding: 25px;
+    background: var(--surface);
+    border: 1px solid #ffffff15;
+    border-radius: 18px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.level-card:hover:not(.locked) {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+}
+
+.level-card.locked {
+    opacity: 0.5;
+    filter: grayscale(0.7);
+}
+
+.level-icon {
+    font-size: 38px;
+    margin-bottom: 12px;
+}
+
+.level-card h3 {
+    margin-bottom: 8px;
+}
+
+.level-card p {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.level-status {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 6px 12px;
+    background: #ffffff10;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.level-card button {
+    display: block;
+    width: 100%;
+    margin-top: 15px;
+    padding: 11px;
+    background: var(--primary);
+    color: white;
+    border-radius: 9px;
+    font-weight: 600;
+}
+
+.level-card.locked button {
+    background: #55516b;
+    cursor: not-allowed;
+}
+
+/* GAME */
+
+.game-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.game-progress {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+    font-weight: 600;
+}
+
+.game-progress span:last-child {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.progress-track {
+    height: 9px;
+    background: var(--surface-light);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 25px;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--primary), var(--yellow));
+    border-radius: 20px;
+    transition: width 0.4s;
+}
+
+.question-card {
+    max-width: 750px;
+    margin: auto;
+    padding: 35px;
+    background: var(--surface);
+    border: 1px solid #ffffff15;
+    border-radius: 22px;
+    text-align: center;
+}
+
+.question-card h2 {
+    margin: 20px 0 10px;
+    font-size: 25px;
+}
+
+.question-card > p {
+    color: var(--muted);
+    line-height: 1.7;
+}
+
+.question-content {
+    margin: 25px 0;
+}
+
+.question-image {
+    width: 100%;
+    max-width: 280px;
+    height: 160px;
+    object-fit: contain;
+    background: var(--surface-light);
+    border-radius: 15px;
+    padding: 15px;
+}
+
+.answer-area {
+    margin: 20px 0;
+}
+
+.answer-input {
+    width: 100%;
+    max-width: 450px;
+    padding: 15px;
+    background: var(--bg);
+    color: white;
+    border: 1px solid #ffffff25;
+    border-radius: 10px;
+    font-size: 16px;
+    outline: none;
+}
+
+.answer-input:focus {
+    border-color: var(--primary-light);
+}
+
+.word-options,
+.letter-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.word-chip,
+.letter-chip {
+    padding: 12px 17px;
+    background: var(--surface-light);
+    color: white;
+    border: 1px solid #ffffff20;
+    border-radius: 10px;
+    font-size: 15px;
+}
+
+.word-chip:hover,
+.letter-chip:hover {
+    border-color: var(--primary);
+}
+
+.feedback {
+    min-height: 28px;
+    margin: 15px 0;
+    font-weight: 600;
+}
+
+.feedback.success {
+    color: var(--success);
+}
+
+.feedback.error {
+    color: var(--danger);
+}
+
+.game-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.hint-btn {
+    padding: 13px 18px;
+    background: #facc1520;
+    color: var(--yellow);
+    border: 1px solid #facc1540;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+/* RESULTS */
+
+.result-card {
+    max-width: 550px;
+    margin: 50px auto;
+    padding: 40px;
+    text-align: center;
+    background: var(--surface);
+    border: 1px solid #ffffff15;
+    border-radius: 22px;
+}
+
+.result-icon {
+    font-size: 65px;
+    margin-bottom: 15px;
+}
+
+.result-card p {
+    color: var(--muted);
+    margin: 12px 0;
+}
+
+.result-score {
+    margin: 25px 0;
+    color: var(--yellow);
+    font-size: 25px;
+}
+
+/* PROFILE */
+
+.profile-card {
+    max-width: 600px;
+    margin: auto;
+    padding: 35px;
+    text-align: center;
+    background: var(--surface);
+    border-radius: 20px;
+}
+
+.profile-avatar {
+    font-size: 55px;
+}
+
+.profile-card h2 {
+    margin: 10px 0 25px;
+}
+
+.profile-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.profile-stats div {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding: 15px 5px;
+    background: var(--surface-light);
+    border-radius: 12px;
+}
+
+.profile-stats strong {
+    color: var(--yellow);
+    font-size: 22px;
+}
+
+.profile-stats span {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+/* HELP */
+
+.help-card {
+    max-width: 650px;
+    margin: auto;
+    padding: 30px;
+    background: var(--surface);
+    border-radius: 18px;
+    line-height: 2.5;
+}
+
+/* BUTTONS */
+
+.secondary-btn {
+    padding: 11px 17px;
+    background: var(--surface-light);
+    color: white;
+    border: 1px solid #ffffff20;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.secondary-btn:hover {
+    border-color: var(--primary);
+}
+
+/* BOTTOM NAVIGATION */
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 12px 10px;
+    display: flex;
+    justify-content: center;
+    gap: 45px;
+    background: #17132dee;
+    border-top: 1px solid #ffffff15;
+    backdrop-filter: blur(15px);
+    z-index: 20;
+}
+
+.bottom-nav button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    background: transparent;
+    color: var(--muted);
+    font-size: 20px;
+}
+
+.bottom-nav button span {
+    font-size: 11px;
+}
+
+.bottom-nav button:hover {
+    color: var(--yellow);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 700px) {
+    .features,
+    .levels-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero {
+        padding: 40px 10px;
+    }
+
+    .hero h1 {
+        font-size: 32px;
+    }
+
+    .question-card {
+        padding: 22px 15px;
+    }
+
+    .bottom-nav {
+        gap: 25px;
+    }
+
+    .profile-stats {
+        gap: 7px;
+    }
+
+    .profile-stats strong {
+        font-size: 18px;
+    }
+
+    .profile-stats span {
+        font-size: 10px;
+    }
+}
+
+.question-image-placeholder,
+.crossword-placeholder,
+.mystery-icon {
+    font-size: 55px;
+    padding: 25px;
+    margin: 15px auto;
+}
+
+.instruction {
+    color: var(--muted);
+    margin-bottom: 15px;
+}
+
+.selected-words {
+    margin-top: 20px;
+    padding: 15px;
+    background: var(--bg);
+    border-radius: 12px;
+}
+
+.selected-words strong {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.word-chip:disabled {
+    cursor: not-allowed;
+}
+
+/* =================================
+   KALIMAT CRASH STYLE LETTER GRID
+================================= */
+
+.game-picture {
+    font-size: 65px;
+    margin: 15px auto;
+    animation: pictureFloat 2s infinite ease-in-out;
+}
+
+@keyframes pictureFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-7px);
+    }
+}
+
+.mode-instruction {
+    color: var(--muted);
+    margin: 10px 0 20px;
+}
+
+.answer-slots {
+    min-height: 65px;
+    padding: 12px;
+    margin: 15px auto 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    background: #0d2635;
+    border: 2px solid #ffffff15;
+    border-radius: 12px;
+}
+
+.slot-placeholder {
+    color: #8797a8;
+    font-size: 13px;
+}
+
+.answer-letter {
+    width: 35px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(145deg, #facc15, #eaa800);
+    color: #5b4200;
+    border-radius: 8px;
+    font-size: 19px;
+    font-weight: 800;
+    box-shadow: 0 3px 0 #9c6b00;
+}
+
+.letter-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(35px, 1fr));
+    gap: 9px;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.letter-tile {
+    aspect-ratio: 1;
+    background: linear-gradient(145deg, #62d5ed, #278acb);
+    color: #064b70;
+    border: 2px solid #ffffff55;
+    border-radius: 10px;
+    font-size: 22px;
+    font-weight: 800;
+    box-shadow: 0 4px 0 #17628f;
+    transition: 0.15s;
+}
+
+.letter-tile:nth-child(3n) {
+    background: linear-gradient(145deg, #ffe76b, #f5b900);
+    color: #735000;
+    box-shadow: 0 4px 0 #b77d00;
+}
+
+.letter-tile:nth-child(3n + 1) {
+    background: linear-gradient(145deg, #8df16d, #48c63e);
+    color: #17652c;
+    box-shadow: 0 4px 0 #278b2c;
+}
+
+.letter-tile:hover:not(:disabled) {
+    transform: translateY(-3px);
+}
+
+.letter-tile:disabled {
+    opacity: 0.25;
+    cursor: default;
+    transform: scale(0.94);
+    box-shadow: none;
+}
+
+.letter-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* WORD ORDER */
+
+.word-answer-area {
+    padding: 15px;
+    margin-bottom: 20px;
+    background: #0d2635;
+    border-radius: 12px;
+}
+
+.word-answer-area strong {
+    color: var(--yellow);
+}
+
+.selected-words {
+    min-height: 50px;
+}
+
+.word-selected {
+    opacity: 0.3;
+}
+
+.selected-word {
+    background: #3eaf55;
+    color: white;
+}
+
+/* ODD ONE */
+
+.odd-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(100px, 1fr));
+    gap: 12px;
+    max-width: 450px;
+    margin: auto;
+}
+
+.odd-option {
+    padding: 17px 10px;
+    background: linear-gradient(145deg, #4ebfe7, #248acb);
+    color: white;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    border: 2px solid #ffffff35;
+    box-shadow: 0 4px 0 #17628f;
+}
+
+.odd-option.odd-selected {
+    background: linear-gradient(145deg, #8df16d, #48c63e);
+    color: #145d25;
+    border-color: white;
+}
+
+.odd-option:disabled {
+    opacity: 0.6;
+}
+
+@media (max-width: 500px) {
+    .letter-grid {
+        gap: 6px;
+    }
+
+    .letter-tile {
+        font-size: 18px;
+        border-radius: 7px;
+    }
+
+    .answer-letter {
+        width: 29px;
+        height: 36px;
+    }
+}
+
+/* =====================================
+   PIE CHALLENGE - GAME SCREEN DESIGN
+===================================== */
+
+#gameView {
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+/* Game background */
+
+#gameView .question-card {
+    max-width: 100%;
+    padding: 30px 25px;
+    background:
+            radial-gradient(circle at top, #176b83, transparent 65%),
+            linear-gradient(160deg, #123e5c, #092c48);
+    border: 3px solid #287b98;
+    border-radius: 24px;
+    box-shadow: 0 12px 35px #0005;
+    overflow: hidden;
+}
+
+/* Top information */
+
+#gameView .game-top {
+    padding: 14px 18px;
+    background: linear-gradient(135deg, #17617d, #10435f);
+    border: 2px solid #3485a0;
+    border-radius: 15px;
+}
+
+#gameView .game-progress {
+    color: white;
+}
+
+#gameView .game-progress span:last-child {
+    color: #b9e7f4;
+}
+
+/* Question title */
+
+#gameView .question-card h2 {
+    color: #fff;
+    font-size: 26px;
+    font-weight: 800;
+    text-shadow: 0 3px 5px #0005;
+}
+
+#gameView .question-card > p {
+    color: #d1edf5;
+}
+
+/* Question badge */
+
+#gameView .question-badge {
+    background: #facc1525;
+    border: 2px solid #ffda55;
+    color: #ffe477;
+}
+
+/* Question picture */
+
+#gameView .game-picture {
+    width: 145px;
+    height: 125px;
+    display: grid;
+    place-items: center;
+    margin: 20px auto;
+    font-size: 65px;
+    background: linear-gradient(145deg, #e9faff, #a8dce9);
+    border: 5px solid #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 7px 0 #15516b;
+}
+
+/* Instructions */
+
+#gameView .mode-instruction {
+    color: #d5f4ff;
+    font-weight: 600;
+}
+
+/* Answer area */
+
+#gameView .answer-slots {
+    min-height: 70px;
+    background: #092b40;
+    border: 2px solid #3986a0;
+    border-radius: 14px;
+    box-shadow: inset 0 4px 10px #0005;
+}
+
+#gameView .answer-letter {
+    width: 38px;
+    height: 44px;
+    background: linear-gradient(145deg, #fff27a, #ffc928);
+    color: #795000;
+    border: 2px solid #fff6b4;
+    border-radius: 8px;
+    box-shadow: 0 4px 0 #b47a0b;
+    animation: letterPop 0.2s ease;
+}
+
+@keyframes letterPop {
+    from {
+        transform: scale(0.7);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+/* Letter grid */
+
+#gameView .letter-grid {
+    max-width: 440px;
+    gap: 10px;
+    padding: 15px;
+    margin: 15px auto;
+    background: #0b3049;
+    border: 2px solid #276783;
+    border-radius: 18px;
+}
+
+#gameView .letter-tile {
+    border: 2px solid #ffffffaa;
+    border-radius: 11px;
+    font-size: 23px;
+    transition: transform 0.15s, filter 0.15s;
+}
+
+#gameView .letter-tile:active:not(:disabled) {
+    transform: scale(0.9);
+}
+
+#gameView .letter-tile:disabled {
+    opacity: 0.18;
+    filter: grayscale(1);
+}
+
+/* Action buttons */
+
+#gameView .letter-actions .secondary-btn {
+    background: #17617d;
+    border: 2px solid #4b9bb4;
+    color: white;
+}
+
+#gameView .letter-actions .secondary-btn:hover {
+    background: #247f9d;
+}
+
+/* Main buttons */
+
+#gameView .primary-btn {
+    background: linear-gradient(145deg, #ffe66d, #ffb91e);
+    color: #664400;
+    border: 2px solid #fff0a5;
+    box-shadow: 0 5px 0 #a66b08;
+    font-weight: 800;
+}
+
+#gameView .primary-btn:hover {
+    transform: translateY(-2px);
+}
+
+#gameView .hint-btn {
+    background: #164d6b;
+    color: #ffe477;
+    border: 2px solid #478ba5;
+}
+
+/* Feedback */
+
+#gameView .feedback {
+    padding: 10px;
+    border-radius: 10px;
+}
+
+#gameView .feedback.success {
+    background: #22c55e25;
+    color: #8bffae;
+}
+
+#gameView .feedback.error {
+    background: #ef444425;
+    color: #ffaaaa;
+}
+
+/* Progress bar */
+
+#gameView .progress-track {
+    height: 12px;
+    background: #092b40;
+    border: 1px solid #3986a0;
+}
+
+#gameView .progress-fill {
+    background: linear-gradient(90deg, #ffe66d, #ffae20);
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+    #gameView .question-card {
+        padding: 22px 12px;
+    }
+
+    #gameView .game-top {
+        padding: 10px;
+    }
+
+    #gameView .question-card h2 {
+        font-size: 21px;
+    }
+
+    #gameView .letter-grid {
+        gap: 7px;
+        padding: 10px;
+    }
+
+    #gameView .letter-tile {
+        font-size: 19px;
+    }
+
+    #gameView .game-picture {
+        width: 120px;
+        height: 105px;
+        font-size: 55px;
+    }
+}
+
+/* Fix game screen spacing and bottom navigation overlap */
+
+#gameView {
+    padding-top: 25px;
+    padding-bottom: 120px;
+    box-sizing: border-box;
+}
+
+#gameView .question-card {
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    #gameView {
+        padding-top: 15px;
+        padding-bottom: 130px;
+    }
+}
+
+/* =================================
+   PIE CHALLENGE - QUESTION IMAGES
+================================= */
+
+#gameView .game-picture {
+    width: min(100%, 380px);
+    height: 190px;
+    margin: 20px auto;
+    padding: 0;
+    overflow: hidden;
+    border: 3px solid #ffffff;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #dff6ff, #9bdce8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25);
+}
+
+#gameView .question-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+#gameView .game-picture:hover .question-image {
+    transform: scale(1.05);
+}
+
+#gameView .image-placeholder {
+    font-size: 75px;
+}
+
+@media (max-width: 600px) {
+    #gameView .game-picture {
+        height: 150px;
+        width: 90%;
+    }
+}
+
+/* =================================
+   QUESTION TRANSITION ANIMATION
+================================= */
+
+@keyframes questionEnter {
+    from {
+        opacity: 0;
+        transform: translateY(25px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+#gameView .question-card.animate-question {
+    animation: questionEnter 0.45s ease-out;
+}
+
+#gameView .game-picture {
+    animation: questionEnter 0.55s ease-out;
+}
+
+/* =================================
+   PIE CHALLENGE - BUTTON EFFECTS
+================================= */
+
+/* General button animation */
+#gameView button {
+    transition: transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+}
+
+/* Hover effect */
+#gameView button:not(:disabled):hover {
+    transform: translateY(-3px);
+    filter: brightness(1.12);
+    box-shadow: 0 5px 14px rgba(0, 220, 255, 0.2);
+}
+
+/* Click effect */
+#gameView button:not(:disabled):active {
+    transform: scale(0.95);
+}
+
+/* Disabled buttons */
+#gameView button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+/* Main verify button */
+#gameView #checkBtn {
+    box-shadow: 0 4px 0 #c58a00;
+}
+
+#gameView #checkBtn:not(:disabled):hover {
+    box-shadow: 0 6px 0 #c58a00,
+    0 8px 18px rgba(255, 190, 0, 0.3);
+}
+
+/* =========================================
+   CROSSWORD — CLEAN RESPONSIVE DESIGN
+   ========================================= */
+#gameView .crossword-board {
+    width: 100%;
+    max-width: 680px;
+    margin: 16px auto;
+    padding: 20px 12px;
+    border-radius: 18px;
+    background: rgba(255,255,255,.055);
+    overflow-x: auto;
+}
+#gameView .crossword-board h3 {
+    font-size: clamp(16px, 3vw, 21px);
+    margin-bottom: 18px;
+    line-height: 1.4;
+}
+#gameView .real-crossword-grid {
+    display: grid;
+    grid-template-columns: repeat(15, minmax(0, 1fr));
+    gap: clamp(2px, .5vw, 5px);
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto 20px;
+}
+#gameView .crossword-square {
+    min-width: 0;
+    aspect-ratio: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    background: transparent;
+    font-size: clamp(9px, 1.8vw, 17px);
+    font-weight: 800;
+    line-height: 1;
+    user-select: none;
+}
+#gameView .crossword-square.active {
+    background: linear-gradient(145deg,#ffe976,#ffc52b);
+    border: 1px solid #e4a200;
+    color: #503400;
+    box-shadow: 0 2px 0 #a97400;
+    cursor: pointer;
+}
+#gameView .crossword-square.active.selected {
+    outline: 3px solid #66f0c0;
+    outline-offset: 1px;
+    position: relative;
+    z-index: 1;
+}
+#gameView .crossword-square.active.filled {
+    background: linear-gradient(145deg,#8ff3a1,#4ade80);
+    color: #123524;
+    border-color: #2b9b58;
+}
+#gameView .crossword-keyboard {
+    display: grid;
+    grid-template-columns: repeat(9, minmax(0,1fr));
+    gap: 8px;
+    width: 100%;
+    max-width: 480px;
+    margin: 22px auto 8px;
+}
+#gameView .crossword-key {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-width: 0;
+    min-height: 43px;
+    padding: 0;
+    border: 2px solid #e9a900;
+    border-radius: 8px;
+    background: linear-gradient(145deg,#ffe976,#ffc52b);
+    color: #392600;
+    font-size: 17px;
+    font-weight: 900;
+    line-height: 1;
+    box-shadow: 0 3px 0 #a97400;
+    cursor: pointer;
+}
+#gameView .crossword-key:focus-visible,
+#gameView .crossword-square.active:focus-visible {
+    outline: 3px solid #77f7ff;
+    outline-offset: 2px;
+}
+#gameView .crossword-key:hover:not(:disabled) {
+    filter: brightness(1.08);
+}
+@media (max-width: 600px) {
+    #gameView .crossword-board { padding: 14px 6px; }
+    #gameView .real-crossword-grid { gap: 2px; }
+    #gameView .crossword-square { border-radius: 3px; font-size: clamp(7px, 2vw, 12px); }
+    #gameView .crossword-keyboard {
+        grid-template-columns: repeat(7,minmax(0,1fr));
+        gap: 6px;
+    }
+    #gameView .crossword-key { min-height: 39px; font-size: 15px; }
+}
+@media (max-width: 380px) {
+    #gameView .crossword-keyboard { gap: 4px; }
+    #gameView .crossword-key { min-height: 35px; font-size: 14px; }
+}
+
+/* CROSSWORD - LETTER STATES */
+
+#gameView .crossword-square.active {
+    background: linear-gradient(145deg, #ffe66d, #ffc329);
+    color: #392600;
+    border: 2px solid #e9a900;
+}
+
+#gameView .crossword-square.filled {
+    background: linear-gradient(145deg, #63c9f5, #298acb);
+    color: #ffffff;
+    border-color: #b9eaff;
+}
+
+#gameView .crossword-square.selected {
+    outline: 3px solid #ffffff;
+    outline-offset: 2px;
+}
+
+#gameView .crossword-square.correct {
+    background: #22c55e;
+    color: white;
+    border-color: #86efac;
+}
+
+#gameView .crossword-square.incorrect {
+    background: #ef4444;
+    color: white;
+    border-color: #fca5a5;
+}
+
+/* CROSSWORD VALIDATION STATES */
+
+#gameView .crossword-square.active.empty {
+    background: linear-gradient(145deg, #ffe66d, #ffc329);
+    color: #392600;
+    border-color: #e9a900;
+}
+
+#gameView .crossword-square.active.correct {
+    background: #22c55e;
+    color: white;
+    border-color: #86efac;
+}
+
+#gameView .crossword-square.active.incorrect {
+    background: #ef4444;
+    color: white;
+    border-color: #fca5a5;
+}
+
+#gameView .crossword-square.active.filled:not(.correct):not(.incorrect) {
+    background: #298acb;
+    color: white;
+    border-color: #b9eaff;
+}
+
+/* CROSSWORD WORD-BY-WORD */
+
+#gameView .crossword-square.active.selected {
+    background: #38bdf8;
+    border: 2px solid #e0f2fe;
+    outline: none;
+}
+
+#gameView .crossword-square.active.correct {
+    background: #22c55e;
+    color: white;
+    border-color: #86efac;
+}
+
+#gameView .crossword-square.active.filled {
+    color: white;
+    font-weight: 900;
+}
+
+#gameView .crossword-clues {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin: 18px auto;
+}
+
+#gameView .crossword-clues button {
+    font-size: 12px;
+    text-align: left;
+    margin: 0 !important;
+}
+
+#gameView .crossword-clues button:disabled {
+    background: #166534;
+    color: #bbf7d0;
+    opacity: 1;
+}
+
+/* LEVEL 4 - CROSSWORD FIX */
+
+#gameView .crossword-board {
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+}
+
+#gameView .crossword-scroll {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    padding: 12px 0;
+}
+
+#gameView .real-crossword-grid {
+    display: grid;
+    gap: 3px;
+    width: max-content;
+    max-width: none;
+}
+
+#gameView .crossword-square {
+    width: 34px;
+    height: 34px;
+    min-width: 0;
+    min-height: 0;
+    box-sizing: border-box;
+}
+
+#gameView .crossword-square:not(.active) {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+#gameView .crossword-square.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+#gameView .crossword-square.active.selected {
+    background: #38bdf8;
+    color: white;
+    border: 2px solid #e0f2fe;
+}
+
+#gameView .crossword-square.active.correct {
+    background: #22c55e;
+    color: white;
+    border: 2px solid #86efac;
+}
+
+#gameView .crossword-clues {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin: 20px 0;
+}
+
+#gameView .crossword-clues button {
+    white-space: normal;
+    text-align: left;
+}
+
+@media (max-width: 600px) {
+    #gameView .crossword-scroll {
+        overflow-x: auto;
+    }
+}
+
+/* CROSSWORD PROGRESS */
+
+.crossword-progress {
+    max-width: 450px;
+    margin: 15px auto 22px;
+}
+
+.crossword-progress-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 9px;
+    color: #f8fafc;
+    font-size: 14px;
+}
+
+.crossword-progress-track {
+    width: 100%;
+    height: 10px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+#crosswordProgressFill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #22c55e, #86efac);
+    border-radius: 20px;
+    transition: width 0.4s ease;
+}
+
+/* LEVEL 2 - CENTERED LETTERS */
+
+#gameView .letter-game-center {
+    width: min(100%, 560px);
+    margin: 20px auto;
+    padding: 25px 18px;
+    background: linear-gradient(135deg, #d9f3ff, #a8e0ee);
+    border: 2px solid white;
+    border-radius: 18px;
+    box-sizing: border-box;
+}
+
+#gameView .letter-game-center .letter-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+}
+
+#gameView .letter-game-center .letter-tile {
+    width: 58px;
+    height: 58px;
+    min-width: 58px;
+    flex: 0 0 58px;
+    font-size: 25px;
+    font-weight: 900;
+    border-radius: 12px;
+}
+
+@media (max-width: 600px) {
+    #gameView .letter-game-center {
+        padding: 12px;
+    }
+
+    #gameView .letter-game-center .letter-tile {
+        width: 43px;
+        height: 43px;
+        min-width: 43px;
+        flex-basis: 43px;
+        font-size: 20px;
+    }
+}
+
+/* PROJECT TEAM - HELP PAGE */
+
+.project-team {
+    margin-top: 25px;
+    text-align: center;
+}
+
+.project-team h2 {
+    margin-bottom: 25px;
+}
+
+.team-role {
+    padding: 16px;
+    margin: 12px 0;
+    border-radius: 14px;
+    background: rgba(0, 190, 220, 0.08);
+    border: 1px solid rgba(0, 190, 220, 0.2);
+}
+
+.team-role h3 {
+    color: #00d9ff;
+    margin-bottom: 8px;
+}
+
+.team-role p {
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.project-leader {
+    background: rgba(255, 193, 7, 0.1);
+    border-color: rgba(255, 193, 7, 0.4);
+}
+
+.project-leader h3 {
+    color: #ffc107;
+}
